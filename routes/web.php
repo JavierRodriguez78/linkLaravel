@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     $links = \App\link::all();
-    return view('welcome')->withLink($links);
+    return view('welcome')->withLinks($links);
 });
 
 Auth::routes();
