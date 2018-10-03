@@ -27,4 +27,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function isUserVerified(){
+       
+        return  User::where('email_verified_at',
+        '<>',null)->get();
+
+    }
 }
