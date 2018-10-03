@@ -11,10 +11,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    $links = \App\link::all();
-    return view('welcome')->withLinks($links);
-});
+Route::get('/', 'LinkController@index');
 
 Route::get('/submit',function(){
     return view('submit');
