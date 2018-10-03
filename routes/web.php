@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +18,22 @@ Route::get('/', function () {
 
 Route::get('/submit',function(){
     return view('submit');
+});
+
+Route::post('/submit', function(Request $request){
+    $data=$request->validate([
+        'title'=>'required|max:255',
+        'url'=>'required|url|max:255',
+        'description'=>'required|max:255'
+    ]);
+
+    //$link=tap(new App\link($data))->save(); //mass save
+    $link = new App\link;
+    $link->title= $data['title'];
+    $link->url = $data['url'];
+    $link->description = $data['description'];
+    $link->save();
+    return redirect('/');
 });
 
 Auth::routes();
