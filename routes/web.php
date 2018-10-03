@@ -16,6 +16,10 @@ Route::get('/', function () {
     return view('welcome')->withLinks($links);
 });
 
+Route::get('/submit',function(){
+    return view('submit');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
