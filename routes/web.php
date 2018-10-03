@@ -13,9 +13,7 @@ use Illuminate\Http\Request;
 
 Route::get('/', 'LinkController@index');
 
-Route::get('/submit',function(){
-    return view('submit');
-});
+Route::get('/submit','SubmitLinkController@index');
 
 Route::post('/submit', function(Request $request){
     $data=$request->validate([
