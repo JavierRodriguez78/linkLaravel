@@ -27,9 +27,30 @@ class SubmitLinksTest extends TestCase
        $this ->get('/')->assertSee('Example Title');
    }
    
-   /**@test */
+   /** @test */
    function link_is_not_created_if_validation_fails(){
       $response = $this->post('/submit');
       $response->assertSessionHasErrors(['title','url','description']); 
+   }
+
+   /** @test */
+   function link_is_not_created_with_an_invalid_url(){
+       $this->withoutExceptionHandling();
+       $cases = ['//invalid-url.com','/invalid-url','foo.com'];
+       foreach( $cases as $case)
+       {
+           try{
+               $response = $this->post('/submit',[
+                   'title'=>'Example Title',
+                   'url'=>$case,
+                   'description'=>'Example Description'
+               ]);
+           }catch(ValidationException $e){
+               $this->assertEquals('The url format is invalid',
+                $e->validator->errors()->first('url'));
+                continue;
+           }
+           $this->fail("The URL $case passed validation when it should have failed");
+       }
    }
 }
